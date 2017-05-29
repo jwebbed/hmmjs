@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>🤔</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      padding: 0;
+      width: 100%;
+    }
+    .hmm-container {
+      backface-visibility: hidden;
+      display: inline-block;
+      transform-origin: center;
+      position: absolute;
+    }
+    .hmm {
+      animation: hmmmmm 5000ms linear forwards;
+      display: inline-block;
+      font-size: 5em;
+      will-change: transform;
+    }
+    .hmm::before,
+    .hmm::after {
+      content: '🤔';
+      display: inline-block;
+    }
+    .hmm::after {
+      animation: hmmmmmbg 5000ms linear forwards;
+      font-size: 120px;
+      left: -20px;
+      opacity: 0.5;
+      position: absolute;
+      top: -20px;
+      z-index: -1;
+    }
+    @keyframes hmmmmm {
+      0% {
+        opacity: 0;
+      }
+      25% {
+        opacity: 1;
+      }
+      75% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(450%);
+      }
+    }
+    @keyframes hmmmmmbg {
+      100% {
+        transform: translateX(10%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    function randomBetween(x, y) {
+      return Math.floor(Math.random() * y) + x;
+    }
+
+    // Random X location
+    function randomX() {
+      return randomBetween(10, window.innerWidth) + 'px';
+    }
+
+    // Random Y location
+    function randomY() {
+      return randomBetween(10, window.innerHeight) + 'px';
+    }
+
+    // Random angle between -45 and 45 deg
+    function randomAngle() {
+      return randomBetween(-45, 45);
+    }
+
+    // Random scale
+    function randomScale() {
+      return randomBetween(1, 5);
+    }
+
+    // Sets the element to a random place and angle
+    function randomContainerPlacement(elHmm) {
+      var flip = randomBetween(0, 2) > 0 ? '-' : '';
+      elHmm.style.transform =
+        'translate(' + randomX() + ',' + randomY() + ') ' +
+        'rotate(' + randomAngle() + 'deg) ' +
+        'scaleX(' + flip + '1)';
+    }
+
+    function makeHmm() {
+      var elHmmContainer = document.createElement('div');
+      elHmmContainer.className = 'hmm-container';
+      var elHmm = document.createElement('div');
+      elHmm.className = 'hmm';
+      elHmmContainer.appendChild(elHmm);
+      document.body.appendChild(elHmmContainer);
+
+      randomContainerPlacement(elHmmContainer);
+
+      setTimeout(function() {
+        document.body.removeChild(elHmmContainer);
+      }, 5500);
+    }
+
+    makeHmm();
+    setInterval(makeHmm, 1500);
+  </script>
+</body>
+</html>
