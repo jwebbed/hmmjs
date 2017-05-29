@@ -13,24 +13,24 @@
       padding: 0;
       width: 100%;
     }
-    .hmm-container {
+    .🤔-container {
       display: inline-block;
       position: absolute;
       transform-origin: center;
     }
-    .hmm {
-      animation: hmmmmm 5000ms linear forwards;
+    .🤔 {
+      animation: 🤔 5000ms linear forwards;
       display: inline-block;
       font-size: 5em;
       will-change: transform;
     }
-    .hmm::before,
-    .hmm::after {
+    .🤔::before,
+    .🤔::after {
       content: '🤔';
       display: inline-block;
     }
-    .hmm::after {
-      animation: hmmmmmbg 5000ms linear forwards;
+    .🤔::after {
+      animation: 🤔🤔 5000ms linear forwards;
       font-size: 120px;
       left: -20px;
       opacity: 0.5;
@@ -38,7 +38,7 @@
       top: -20px;
       z-index: -1;
     }
-    @keyframes hmmmmm {
+    @keyframes 🤔 {
       0% {
         opacity: 0;
       }
@@ -53,7 +53,7 @@
         transform: translateX(450%);
       }
     }
-    @keyframes hmmmmmbg {
+    @keyframes 🤔🤔 {
       100% {
         transform: translateX(10%);
       }
@@ -76,19 +76,19 @@
       return randomBetween(-60, 60) + 'deg';
     }
 
-    function randomContainerPlacement(elHmm) {
+    function randomContainerPlacement(el) {
       var flip = randomBetween(0, 2) > 0 ? '-' : '';
-      elHmm.style.transform =
+      el.style.transform =
         'translate(' + randomX() + ',' + randomY() + ') ' +
         'rotate(' + randomAngle() + ') ' +
         'scaleX(' + flip + '1)';
     }
 
-    function makeHmm() {
+    function hmm() {
       var elHmmContainer = document.createElement('div');
-      elHmmContainer.className = 'hmm-container';
+      elHmmContainer.className = '🤔-container';
       var elHmm = document.createElement('div');
-      elHmm.className = 'hmm';
+      elHmm.className = '🤔';
       elHmmContainer.appendChild(elHmm);
       document.body.appendChild(elHmmContainer);
 
@@ -99,8 +99,8 @@
       }, 5500);
     }
 
-    makeHmm();
-    setInterval(makeHmm, 1500);
+    hmm();
+    setInterval(hmm, 1500);
   </script>
 </body>
 </html>
