@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1.0, width=device-width">
   <title>🤔</title>
   <style>
     html,
@@ -13,10 +14,9 @@
       width: 100%;
     }
     .hmm-container {
-      backface-visibility: hidden;
       display: inline-block;
-      transform-origin: center;
       position: absolute;
+      transform-origin: center;
     }
     .hmm {
       animation: hmmmmm 5000ms linear forwards;
@@ -66,32 +66,21 @@
       return Math.floor(Math.random() * y) + x;
     }
 
-    // Random X location
     function randomX() {
-      return randomBetween(10, window.innerWidth) + 'px';
+      return randomBetween(0, window.innerWidth) + 'px';
     }
-
-    // Random Y location
     function randomY() {
-      return randomBetween(10, window.innerHeight) + 'px';
+      return randomBetween(0, window.innerHeight) + 'px';
     }
-
-    // Random angle between -45 and 45 deg
     function randomAngle() {
-      return randomBetween(-45, 45);
+      return randomBetween(-60, 60) + 'deg';
     }
 
-    // Random scale
-    function randomScale() {
-      return randomBetween(1, 5);
-    }
-
-    // Sets the element to a random place and angle
     function randomContainerPlacement(elHmm) {
       var flip = randomBetween(0, 2) > 0 ? '-' : '';
       elHmm.style.transform =
         'translate(' + randomX() + ',' + randomY() + ') ' +
-        'rotate(' + randomAngle() + 'deg) ' +
+        'rotate(' + randomAngle() + ') ' +
         'scaleX(' + flip + '1)';
     }
 
