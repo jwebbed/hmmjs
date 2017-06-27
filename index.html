@@ -2,8 +2,9 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="initial-scale=1.0, width=device-width">
-  <title>🤔</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, width=device-width">
+  <link rel="icon" type="image/png" href="hmmmm.png">
+  <title>Hmmmm</title>
   <style>
     html,
     body {
@@ -21,21 +22,26 @@
     .🤔 {
       animation: 🤔 5000ms linear forwards;
       display: inline-block;
-      font-size: 5em;
       will-change: transform;
     }
     .🤔::before,
     .🤔::after {
-      content: '🤔';
+      content: '';
       display: inline-block;
+      background: url('hmmmm.png') no-repeat center center / contain;
+    }
+    .🤔::before {
+      height: 5em;
+      width: 5em;
     }
     .🤔::after {
       animation: 🤔🤔 5000ms linear forwards;
-      font-size: 120px;
-      left: -20px;
-      opacity: 0.5;
+      height: 6.5em;
+      width: 6.5em;
       position: absolute;
-      top: -20px;
+      left: -1.5em;
+      top: -0.75em;
+      opacity: 0.5;
       z-index: -1;
     }
     @keyframes 🤔 {
@@ -50,12 +56,12 @@
       }
       100% {
         opacity: 0;
-        transform: translateX(450%);
+        transform: translateX(500%);
       }
     }
     @keyframes 🤔🤔 {
       100% {
-        transform: translateX(10%);
+        transform: translateX(20%);
       }
     }
   </style>
