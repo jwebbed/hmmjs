@@ -20,15 +20,29 @@ function randomContainerPlacement(el) {
     'scaleX(' + flip + '1)';
 }
 
-function hmm() {
-  var elHmmOverlay = document.createElement('div');
-  elHmmOverlay.className = '.🤔-overlay';
-  document.body.appendChild(elHmmOverlay);
+function genCSS(emoji) {
+  var css = document.createElement('style');
+  css.type = 'text/css';
 
+  var rule = '.' + emoji + '::before, ' + emoji + '::after { content: "' + emoji + '"};'
+  console.log(rule);
+
+  css.appendChild(document.createTextNode(rule)); // Support for the rest
+  document.getElementsByTagName("head")[0].appendChild(css); // Specifies where to place the css
+}
+
+var emoji = "🙃";
+genCSS(emoji);
+
+var elHmmOverlay = document.createElement('div');
+elHmmOverlay.className = '🤔-overlay';
+document.body.appendChild(elHmmOverlay);
+
+function hmm(emoji) {
   var elHmmContainer = document.createElement('div');
   elHmmContainer.className = '🤔-container';
   var elHmm = document.createElement('div');
-  elHmm.className = '🤔';
+  elHmm.className = '🤔 ' + emoji;
   elHmmContainer.appendChild(elHmm);
   elHmmOverlay.appendChild(elHmmContainer);
 
@@ -39,5 +53,5 @@ function hmm() {
   }, 5500);
 }
 
-hmm();
-setInterval(hmm, 1500);
+hmm(emoji);
+setInterval(hmm, 1500, emoji);

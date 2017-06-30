@@ -1,8 +1,12 @@
 .🤔-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   height: 100vh;
   width: 100vw;
   z-index: 10;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .🤔-container {
@@ -17,12 +21,14 @@
   will-change: transform;
   pointer-events: none;
 }
+
 .🤔::before,
 .🤔::after {
-  content: '';
+  /* content: '🙃'; */
   display: inline-block;
-  background: url('hmmmm.png') no-repeat center center / contain;
+  font-size: 4em;
 }
+
 .🤔::before {
   height: 5em;
   width: 5em;
@@ -49,7 +55,7 @@
   }
   100% {
     opacity: 0;
-    transform: translateX(500%);
+    transform: translateX(300%);
   }
 }
 @keyframes 🤔🤔 {
