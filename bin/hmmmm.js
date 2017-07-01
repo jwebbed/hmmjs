@@ -68,130 +68,14 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-var _index = __webpack_require__(1);
-
-var hmmmm = _interopRequireWildcard(_index);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-console.log('test');
+eval("\n\nvar _index = __webpack_require__(1);\n\nvar hmmmm = _interopRequireWildcard(_index);\n\nfunction _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }\n\nconsole.log('test');//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvdGVzdC5qcz80YjQ3Il0sIm5hbWVzIjpbImhtbW1tIiwiY29uc29sZSIsImxvZyJdLCJtYXBwaW5ncyI6Ijs7QUFBQTs7SUFBWUEsSzs7OztBQUVaQyxRQUFRQyxHQUFSLENBQVksTUFBWiIsImZpbGUiOiIwLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICogYXMgaG1tbW0gZnJvbSAnLi9pbmRleC5qcyc7XG5cbmNvbnNvbGUubG9nKCd0ZXN0Jyk7XG5cblxuXG4vLyBXRUJQQUNLIEZPT1RFUiAvL1xuLy8gLi9zcmMvdGVzdC5qcyJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///0\n");
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.isEmoji = isEmoji;
-exports.startEmojiRandom = startEmojiRandom;
-exports.startEmoji = startEmoji;
-function randomBetween(x, y) {
-  return Math.floor(Math.random() * y) + x;
-}
-
-function randomX() {
-  return randomBetween(0, window.innerWidth) + 'px';
-}
-function randomY() {
-  return randomBetween(0, window.innerHeight) + 'px';
-}
-function randomAngle() {
-  return randomBetween(-60, 60) + 'deg';
-}
-
-function randomContainerPlacement(el) {
-  var flip = randomBetween(0, 2) > 0 ? '-' : '';
-  el.style.transform = 'translate(' + randomX() + ',' + randomY() + ') ' + 'rotate(' + randomAngle() + ') ' + 'scaleX(' + flip + '1)';
-}
-
-var genCSS = function () {
-  var used = [];
-  return function (emoji) {
-    if (used.indexOf(emoji) > -1) return;
-    used.push(emoji);
-
-    var css = document.createElement('style');
-    css.type = 'text/css';
-
-    var rule = '.' + emoji + '::before, ' + emoji + '::after { content: "' + emoji + '"};';
-
-    css.appendChild(document.createTextNode(rule));
-    var elements = document.getElementsByClassName("🤔-overlay")[0].appendChild(css);
-  };
-}();
-
-// From https://stackoverflow.com/questions/18862256/how-to-detect-emoji-using-javascript
-function isEmoji(str) {
-  var ranges = ['\uD83C[\uDF00-\uDFFF]', // U+1F300 to U+1F3FF
-  '\uD83D[\uDC00-\uDE4F]', // U+1F400 to U+1F64F
-  '\uD83D[\uDE80-\uDEFF]' // U+1F680 to U+1F6FF
-  ];
-  if (str.match(ranges.join('|'))) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function getOverlay() {
-  var elHmmOverlay = document.createElement('div');
-  elHmmOverlay.className = '🤔-overlay';
-  return document.body.appendChild(elHmmOverlay);
-}
-
-function hmm(emoji, elHmmOverlay) {
-  genCSS(emoji);
-
-  var elHmmContainer = document.createElement('div');
-  elHmmContainer.className = '🤔-container';
-  var elHmm = document.createElement('div');
-  elHmm.className = '🤔 ' + emoji;
-  elHmmContainer.appendChild(elHmm);
-  elHmmOverlay.appendChild(elHmmContainer);
-
-  randomContainerPlacement(elHmmContainer);
-
-  setTimeout(function () {
-    elHmmOverlay.removeChild(elHmmContainer);
-  }, 5500);
-}
-
-var randomEmoji = function () {
-  var emojiList = ['🤔', '😁', '🤣', '😒', '💕', '🤦', '🤞', '🎶', '😜', '🌹', '🤳', '😊', '❤', '👌', '👍', '🤷', '😉', '👏', '🎉', '🐱', '‍👤', '😂', '😍', '😘', '🙌', '✌', '😎', '💖', '💋', '🎂', '🐱', '💻'];
-  var i = 0;
-  return function (elHmmOverlay) {
-    hmm(emojiList[i++], elHmmOverlay);
-    if (i == emojiList.length) i = 0;
-  };
-}();
-
-function startEmojiRandom() {
-  var overlay = getOverlay();
-  randomEmoji(overlay);
-  var i = setInterval(randomEmoji, 1500, overlay);
-
-  return function () {
-    clearInterval(i);
-    document.body.removeChild(overlay);
-  };
-}
-
-function startEmoji(emoji) {
-  var overlay = getOverlay();
-  hmm(emoji, overlay);
-  var i = setInterval(hmm, 1500, emoji, overlay);
-
-  return function () {
-    clearInterval(i);
-    document.body.removeChild(overlay);
-  };
-}
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.isEmoji = isEmoji;\nexports.startEmojiRandom = startEmojiRandom;\nexports.startEmoji = startEmoji;\nfunction randomBetween(x, y) {\n  return Math.floor(Math.random() * y) + x;\n}\n\nfunction randomX() {\n  return randomBetween(0, window.innerWidth) + 'px';\n}\nfunction randomY() {\n  return randomBetween(0, window.innerHeight) + 'px';\n}\nfunction randomAngle() {\n  return randomBetween(-60, 60) + 'deg';\n}\n\nfunction randomContainerPlacement(el) {\n  var flip = randomBetween(0, 2) > 0 ? '-' : '';\n  el.style.transform = 'translate(' + randomX() + ',' + randomY() + ') ' + 'rotate(' + randomAngle() + ') ' + 'scaleX(' + flip + '1)';\n}\n\nvar genCSS = function () {\n  var used = [];\n  return function (emoji) {\n    if (used.indexOf(emoji) > -1) return;\n    used.push(emoji);\n\n    var css = document.createElement('style');\n    css.type = 'text/css';\n\n    var rule = '.' + emoji + '::before, ' + emoji + '::after { content: \"' + emoji + '\"};';\n\n    css.appendChild(document.createTextNode(rule));\n    var elements = document.getElementsByClassName(\"🤔-overlay\")[0].appendChild(css);\n  };\n}();\n\n// From https://stackoverflow.com/questions/18862256/how-to-detect-emoji-using-javascript\nfunction isEmoji(str) {\n  var ranges = ['\\uD83C[\\uDF00-\\uDFFF]', // U+1F300 to U+1F3FF\n  '\\uD83D[\\uDC00-\\uDE4F]', // U+1F400 to U+1F64F\n  '\\uD83D[\\uDE80-\\uDEFF]' // U+1F680 to U+1F6FF\n  ];\n  if (str.match(ranges.join('|'))) {\n    return true;\n  } else {\n    return false;\n  }\n}\n\nfunction getOverlay() {\n  var elHmmOverlay = document.createElement('div');\n  elHmmOverlay.className = '🤔-overlay';\n  return document.body.appendChild(elHmmOverlay);\n}\n\nfunction hmm(emoji, elHmmOverlay) {\n  genCSS(emoji);\n\n  var elHmmContainer = document.createElement('div');\n  elHmmContainer.className = '🤔-container';\n  var elHmm = document.createElement('div');\n  elHmm.className = '🤔 ' + emoji;\n  elHmmContainer.appendChild(elHmm);\n  elHmmOverlay.appendChild(elHmmContainer);\n\n  randomContainerPlacement(elHmmContainer);\n\n  setTimeout(function () {\n    elHmmOverlay.removeChild(elHmmContainer);\n  }, 5500);\n}\n\nvar randomEmoji = function () {\n  var emojiList = ['🤔', '😁', '🤣', '😒', '💕', '🤦', '🤞', '🎶', '😜', '🌹', '🤳', '😊', '❤', '👌', '👍', '🤷', '😉', '👏', '🎉', '🐱', '‍👤', '😂', '😍', '😘', '🙌', '✌', '😎', '💖', '💋', '🎂', '🐱', '💻'];\n  var i = 0;\n  return function (elHmmOverlay) {\n    hmm(emojiList[i++], elHmmOverlay);\n    if (i == emojiList.length) i = 0;\n  };\n}();\n\nfunction startEmojiRandom() {\n  var overlay = getOverlay();\n  randomEmoji(overlay);\n  var i = setInterval(randomEmoji, 1500, overlay);\n\n  return function () {\n    clearInterval(i);\n    document.body.removeChild(overlay);\n  };\n}\n\nfunction startEmoji(emoji) {\n  var overlay = getOverlay();\n  hmm(emoji, overlay);\n  var i = setInterval(hmm, 1500, emoji, overlay);\n\n  return function () {\n    clearInterval(i);\n    document.body.removeChild(overlay);\n  };\n}//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvaW5kZXguanM/OTU1MiJdLCJuYW1lcyI6WyJpc0Vtb2ppIiwic3RhcnRFbW9qaVJhbmRvbSIsInN0YXJ0RW1vamkiLCJyYW5kb21CZXR3ZWVuIiwieCIsInkiLCJNYXRoIiwiZmxvb3IiLCJyYW5kb20iLCJyYW5kb21YIiwid2luZG93IiwiaW5uZXJXaWR0aCIsInJhbmRvbVkiLCJpbm5lckhlaWdodCIsInJhbmRvbUFuZ2xlIiwicmFuZG9tQ29udGFpbmVyUGxhY2VtZW50IiwiZWwiLCJmbGlwIiwic3R5bGUiLCJ0cmFuc2Zvcm0iLCJnZW5DU1MiLCJ1c2VkIiwiZW1vamkiLCJpbmRleE9mIiwicHVzaCIsImNzcyIsImRvY3VtZW50IiwiY3JlYXRlRWxlbWVudCIsInR5cGUiLCJydWxlIiwiYXBwZW5kQ2hpbGQiLCJjcmVhdGVUZXh0Tm9kZSIsImVsZW1lbnRzIiwiZ2V0RWxlbWVudHNCeUNsYXNzTmFtZSIsInN0ciIsInJhbmdlcyIsIm1hdGNoIiwiam9pbiIsImdldE92ZXJsYXkiLCJlbEhtbU92ZXJsYXkiLCJjbGFzc05hbWUiLCJib2R5IiwiaG1tIiwiZWxIbW1Db250YWluZXIiLCJlbEhtbSIsInNldFRpbWVvdXQiLCJyZW1vdmVDaGlsZCIsInJhbmRvbUVtb2ppIiwiZW1vamlMaXN0IiwiaSIsImxlbmd0aCIsIm92ZXJsYXkiLCJzZXRJbnRlcnZhbCIsImNsZWFySW50ZXJ2YWwiXSwibWFwcGluZ3MiOiI7Ozs7O1FBd0NnQkEsTyxHQUFBQSxPO1FBbURBQyxnQixHQUFBQSxnQjtRQVdBQyxVLEdBQUFBLFU7QUF0R2hCLFNBQVNDLGFBQVQsQ0FBdUJDLENBQXZCLEVBQTBCQyxDQUExQixFQUE2QjtBQUMzQixTQUFPQyxLQUFLQyxLQUFMLENBQVdELEtBQUtFLE1BQUwsS0FBZ0JILENBQTNCLElBQWdDRCxDQUF2QztBQUNEOztBQUVELFNBQVNLLE9BQVQsR0FBbUI7QUFDakIsU0FBT04sY0FBYyxDQUFkLEVBQWlCTyxP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Y0osQ0FBZDtBQUNBdkIsYUFBU2UsSUFBVCxDQUFjSyxXQUFkLENBQTBCSyxPQUExQjtBQUNELEdBSEQ7QUFJRCIsImZpbGUiOiIxLmpzIiwic291cmNlc0NvbnRlbnQiOlsiZnVuY3Rpb24gcmFuZG9tQmV0d2Vlbih4LCB5KSB7XHJcbiAgcmV0dXJuIE1hdGguZmxvb3IoTWF0aC5yYW5kb20oKSAqIHkpICsgeDtcclxufVxyXG5cclxuZnVuY3Rpb24gcmFuZG9tWCgpIHtcclxuICByZXR1cm4gcmFuZG9tQmV0d2VlbigwLCB3aW5kb3cuaW5uZXJXaWR0aCkgKyAncHgnO1xyXG59XHJcbmZ1bmN0aW9uIHJhbmRvbVkoKSB7XHJcbiAgcmV0dXJuIHJhbmRvbUJldHdlZW4oMCwgd2luZG93LmlubmVySGVpZ2h0KSArICdweCc7XHJcbn1cclxuZnVuY3Rpb24gcmFuZG9tQW5nbGUoKSB7XHJcbiAgcmV0dXJuIHJhbmRvbUJldHdlZW4oLTYwLCA2MCkgKyAnZGVnJztcclxufVxyXG5cclxuZnVuY3Rpb24gcmFuZG9tQ29udGFpbmVyUGxhY2VtZW50KGVsKSB7XHJcbiAgdmFyIGZsaXAgPSByYW5kb21CZXR3ZWVuKDAsIDIpID4gMCA/ICctJyA6ICcnO1xyXG4gIGVsLnN0eWxlLnRyYW5zZm9ybSA9XHJcbiAgICAndHJhbnNsYXRlKCcgKyByYW5kb21YKCkgKyAnLCcgKyByYW5kb21ZKCkgKyAnKSAnICtcclxuICAgICdyb3RhdGUoJyArIHJhbmRvbUFuZ2xlKCkgKyAnKSAnICtcclxuICAgICdzY2FsZVgoJyArIGZsaXAgKyAnMSknO1xyXG59XHJcblxyXG52YXIgZ2VuQ1NTID0gKGZ1bmN0aW9uKCkge1xyXG4gIHZhciB1c2VkID0gW107XHJcbiAgcmV0dXJuIGZ1bmN0aW9uIChlbW9qaSkge1xyXG4gICAgaWYgKHVzZWQuaW5kZXhPZihlbW9qaSkgPiAtMSlcclxuICAgICAgcmV0dXJuO1xyXG4gICAgdXNlZC5wdXNoKGVtb2ppKVxyXG5cclxuICAgIHZhciBjc3MgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzdHlsZScpO1xyXG4gICAgY3NzLnR5cGUgPSAndGV4dC9jc3MnO1xyXG5cclxuICAgIHZhciBydWxlID0gJy4nICsgZW1vamkgKyAnOjpiZWZvcmUsICcgKyBlbW9qaSArICc6OmFmdGVyIHsgY29udGVudDogXCInICsgZW1vamkgKyAnXCJ9OydcclxuXHJcbiAgICBjc3MuYXBwZW5kQ2hpbGQoZG9jdW1lbnQuY3JlYXRlVGV4dE5vZGUocnVsZSkpO1xyXG4gICAgdmFyIGVsZW1lbnRzID0gZG9jdW1lbnQuZ2V0RWxlbWVudHNCeUNsYXNzTmFtZShcIvCfpJQtb3ZlcmxheVwiKVswXS5hcHBlbmRDaGlsZChjc3MpO1xyXG4gIH1cclxufSkoKTtcclxuXHJcbi8vIEZyb20gaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMTg4NjIyNTYvaG93LXRvLWRldGVjdC1lbW9qaS11c2luZy1qYXZhc2NyaXB0XHJcbmV4cG9ydCBmdW5jdGlvbiBpc0Vtb2ppKHN0cikge1xyXG4gICAgdmFyIHJhbmdlcyA9IFtcclxuICAgICAgICAnXFx1ZDgzY1tcXHVkZjAwLVxcdWRmZmZdJywgLy8gVSsxRjMwMCB0byBVKzFGM0ZGXHJcbiAgICAgICAgJ1xcdWQ4M2RbXFx1ZGMwMC1cXHVkZTRmXScsIC8vIFUrMUY0MDAgdG8gVSsxRjY0RlxyXG4gICAgICAgICdcXHVkODNkW1xcdWRlODAtXFx1ZGVmZl0nIC8vIFUrMUY2ODAgdG8gVSsxRjZGRlxyXG4gICAgXTtcclxuICAgIGlmIChzdHIubWF0Y2gocmFuZ2VzLmpvaW4oJ3wnKSkpIHtcclxuICAgICAgICByZXR1cm4gdHJ1ZTtcclxuICAgIH0gZWxzZSB7XHJcbiAgICAgICAgcmV0dXJuIGZhbHNlO1xyXG4gICAgfVxyXG59XHJcblxyXG5cclxuZnVuY3Rpb24gZ2V0T3ZlcmxheSgpIHtcclxuICB2YXIgZWxIbW1PdmVybGF5ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XHJcbiAgZWxIbW1PdmVybGF5LmNsYXNzTmFtZSA9ICfwn6SULW92ZXJsYXknO1xyXG4gIHJldHVybiBkb2N1bWVudC5ib2R5LmFwcGVuZENoaWxkKGVsSG1tT3ZlcmxheSk7XHJcbn1cclxuXHJcblxyXG5mdW5jdGlvbiBobW0oZW1vamksIGVsSG1tT3ZlcmxheSkge1xyXG4gIGdlbkNTUyhlbW9qaSk7XHJcblxyXG4gIHZhciBlbEhtbUNvbnRhaW5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xyXG4gIGVsSG1tQ29udGFpbmVyLmNsYXNzTmFtZSA9ICfwn6SULWNvbnRhaW5lcic7XHJcbiAgdmFyIGVsSG1tID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XHJcbiAgZWxIbW0uY2xhc3NOYW1lID0gJ/CfpJQgJyArIGVtb2ppO1xyXG4gIGVsSG1tQ29udGFpbmVyLmFwcGVuZENoaWxkKGVsSG1tKTtcclxuICBlbEhtbU92ZXJsYXkuYXBwZW5kQ2hpbGQoZWxIbW1Db250YWluZXIpO1xyXG5cclxuICByYW5kb21Db250YWluZXJQbGFjZW1lbnQoZWxIbW1Db250YWluZXIpO1xyXG5cclxuICBzZXRUaW1lb3V0KGZ1bmN0aW9uKCkge1xyXG4gICAgZWxIbW1PdmVybGF5LnJlbW92ZUNoaWxkKGVsSG1tQ29udGFpbmVyKTtcclxuICB9LCA1NTAwKTtcclxufVxyXG5cclxuXHJcbnZhciByYW5kb21FbW9qaSA9IChmdW5jdGlvbigpIHtcclxuICB2YXIgZW1vamlMaXN0ID0gWyfwn6SUJywgJ/CfmIEnLCfwn6SjJywn8J+YkicsJ/CfkpUnLCfwn6SmJywn8J+knicsJ/CfjrYnLCfwn5icJywn8J+MuScsJ/CfpLMnLCfwn5iKJyxcclxuICAgICAgICAgICAgICAgICAgICfinaQnLCAn8J+RjCcsJ/CfkY0nLCfwn6S3Jywn8J+YiScsJ/CfkY8nLCfwn46JJywn8J+QsScsJ+KAjfCfkaQnLCfwn5iCJywn8J+YjScsJ/CfmJgnLFxyXG4gICAgICAgICAgICAgICAgICAgJ/CfmYwnLCfinIwnLCfwn5iOJywn8J+SlicsJ/CfkosnLCfwn46CJywn8J+QsScsJ/CfkrsnXTtcclxuICB2YXIgaSA9IDA7XHJcbiAgcmV0dXJuIGZ1bmN0aW9uKGVsSG1tT3ZlcmxheSkge1xyXG4gICAgaG1tKGVtb2ppTGlzdFtpKytdLCBlbEhtbU92ZXJsYXkpO1xyXG4gICAgaWYgKGkgPT0gZW1vamlMaXN0Lmxlbmd0aClcclxuICAgICAgaSA9IDA7XHJcbiAgfVxyXG59KSgpO1xyXG5cclxuZXhwb3J0IGZ1bmN0aW9uIHN0YXJ0RW1vamlSYW5kb20oKSB7XHJcbiAgdmFyIG92ZXJsYXkgPSBnZXRPdmVybGF5KCk7XHJcbiAgcmFuZG9tRW1vamkob3ZlcmxheSk7XHJcbiAgbGV0IGkgPSBzZXRJbnRlcnZhbChyYW5kb21FbW9qaSwgMTUwMCwgb3ZlcmxheSk7XHJcblxyXG4gIHJldHVybiAoKSA9PiB7XHJcbiAgICBjbGVhckludGVydmFsKGkpO1xyXG4gICAgIGRvY3VtZW50LmJvZHkucmVtb3ZlQ2hpbGQob3ZlcmxheSk7XHJcbiAgfVxyXG59XHJcblxyXG5leHBvcnQgZnVuY3Rpb24gc3RhcnRFbW9qaShlbW9qaSkge1xyXG4gIHZhciBvdmVybGF5ID0gZ2V0T3ZlcmxheSgpO1xyXG4gIGhtbShlbW9qaSwgb3ZlcmxheSk7XHJcbiAgbGV0IGkgPSBzZXRJbnRlcnZhbChobW0sIDE1MDAsIGVtb2ppLCBvdmVybGF5KTtcclxuXHJcbiAgcmV0dXJuICgpID0+IHtcclxuICAgIGNsZWFySW50ZXJ2YWwoaSk7XHJcbiAgICBkb2N1bWVudC5ib2R5LnJlbW92ZUNoaWxkKG92ZXJsYXkpO1xyXG4gIH1cclxufVxyXG5cblxuXG4vLyBXRUJQQUNLIEZPT1RFUiAvL1xuLy8gLi9zcmMvaW5kZXguanMiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///1\n");
 
 /***/ })
 /******/ ]);

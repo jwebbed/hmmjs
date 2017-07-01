@@ -7,6 +7,7 @@ module.exports = {
         path: path.resolve(__dirname, './bin'),
         filename: 'hmmmm.js',
     },
+    devtool: 'eval-source-map',
     module: {
       rules: [
       {
