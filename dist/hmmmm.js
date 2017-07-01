@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["hmmmm"] = factory();
+	else
+		root["hmmmm"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -70,26 +80,10 @@
 "use strict";
 
 
-var _index = __webpack_require__(1);
-
-var hmmmm = _interopRequireWildcard(_index);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-console.log('test');
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.isEmoji = isEmoji;
-exports.startEmojiRandom = startEmojiRandom;
 exports.startEmoji = startEmoji;
 function randomBetween(x, y) {
   return Math.floor(Math.random() * y) + x;
@@ -171,27 +165,12 @@ var randomEmoji = function () {
   };
 }();
 
-function startEmojiRandom() {
+function startEmoji() {
   var overlay = getOverlay();
   randomEmoji(overlay);
-  var i = setInterval(randomEmoji, 1500, overlay);
-
-  return function () {
-    clearInterval(i);
-    document.body.removeChild(overlay);
-  };
-}
-
-function startEmoji(emoji) {
-  var overlay = getOverlay();
-  hmm(emoji, overlay);
-  var i = setInterval(hmm, 1500, emoji, overlay);
-
-  return function () {
-    clearInterval(i);
-    document.body.removeChild(overlay);
-  };
+  setInterval(randomEmoji, 1500, overlay);
 }
 
 /***/ })
 /******/ ]);
+});

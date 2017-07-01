@@ -3,7 +3,7 @@ var path = require('path');
 module.exports = {
     entry: './src/index.js',
     output: {
-        path: path.resolve(__dirname, 'bin'),
+        path: path.resolve(__dirname, 'dist'),
         filename: 'hmmmm.js',
         library: 'hmmmm',
         libraryTarget: 'umd'
