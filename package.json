@@ -1,0 +1,25 @@
+{
+  "name": "emoji-overlay",
+  "version": "1.0.0",
+  "description": "Package to overlay with emoji",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwebbed/hmmmm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jwebbed/hmmmm/issues"
+  },
+  "homepage": "https://github.com/jwebbed/hmmmm#readme",
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-env": "^1.5.2",
+    "webpack": "^3.0.0"
+  }
+}

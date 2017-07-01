@@ -5,9 +5,19 @@
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, width=device-width">
   <link rel="icon" type="image/png" href="hmmmm.png">
   <title>Hmmmm</title>
-  <link href="styles.css" rel="stylesheet">
+  <link href="src/styles.css" rel="stylesheet">
 </head>
 <body>
+  <div>
+    <button style="width: 95vw; height: 95vh;"/>
+  </div>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.3/require.js"></script>
+
   <script type="text/javascript" src="script.js"></script>
+  <script>
+  requirejs(["hmmmm"], function(hmmmm) {
+    hmmmm.startEmoji();
+  });
+  </script>
 </body>
 </html>
