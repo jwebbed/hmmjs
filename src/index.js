@@ -127,24 +127,26 @@ export function isEmoji(str) {
 }
 
 const defaultConfig = {
+  emojis: emojiList,
   random: true,
   interval: 1500,
   duration: 5500
 }
 
-function startEmoji(emoji=emojiList, _config=defaultConfig) {
+function startEmoji(_config=defaultConfig) {
   const config = { ...defaultConfig, ..._config };
   console.log(config);
 
   // Config handling
-  let iter = config.random ? randomIter(emoji.length) :  linearIter(emoji.length);
+  const emojis = config.emojis;
+  let iter = config.random ? randomIter(emojis.length) :  linearIter(emojis.length);
 
   var overlay = getOverlay();
-  hmm(emoji, overlay);
+  hmm(emojis[iter()], overlay);
   let i = setInterval(() => {
     // hmm(emojiList[iter()], elHmmOverlay);
-    hmm(emoji[iter()], overlay);
-  }, 1500);
+    hmm(emojis[iter()], overlay);
+  }, config.interval);
 
   return genCb(i, overlay);
 }

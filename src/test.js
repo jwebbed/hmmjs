@@ -6,5 +6,7 @@ import './styles.css';
 
 
 
-let cb = start();
+let cb = start({
+  interval: 1000
+});
 //setInterval(cb, 3500, true);
