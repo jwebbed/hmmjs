@@ -11,4 +11,6 @@ Based on a project by @arkon
     * Call with list of emojis
     * Return callback to stop
 * 1.0.0
-    * Support non-inline css optionally
+    * Support inline css optionally
+* 1.1.0
+    * Allow custom fonts

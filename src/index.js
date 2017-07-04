@@ -83,7 +83,7 @@ const emojiList = ['🤔', '😁','🤣','😒','💕','🤦','🤞','🎶','�
 
 var randomEmoji = (function() {
   var i = 0;
-  return function(elHmmOverlay) {
+  return (elHmmOverlay) => {
     hmm(emojiList[i++], elHmmOverlay);
     if (i == emojiList.length)
       i = 0;
@@ -101,7 +101,7 @@ export function startEmojiRandom() {
   }
 }
 
-export function startEmoji(emoji, inline=true) {
+export function startEmoji(emoji, inline=false) {
   var overlay = getOverlay();
   hmm(emoji, overlay);
   let i = setInterval(hmm, 1500, emoji, overlay);

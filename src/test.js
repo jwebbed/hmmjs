@@ -1,3 +1,4 @@
 import * as hmmmm from './index.js';
+import './styles.css';
 
-console.log('test');
+let cb = hmmmm.startEmojiRandom();
