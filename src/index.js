@@ -77,10 +77,11 @@ function hmm(emoji, elHmmOverlay) {
 }
 
 
+const emojiList = ['🤔', '😁','🤣','😒','💕','🤦','🤞','🎶','😜','🌹','🤳','😊',
+                 '❤', '👌','👍','🤷','😉','👏','🎉','🐱','‍👤','😂','😍','😘',
+                 '🙌','✌','😎','💖','💋','🎂','🐱','💻'];
+
 var randomEmoji = (function() {
-  var emojiList = ['🤔', '😁','🤣','😒','💕','🤦','🤞','🎶','😜','🌹','🤳','😊',
-                   '❤', '👌','👍','🤷','😉','👏','🎉','🐱','‍👤','😂','😍','😘',
-                   '🙌','✌','😎','💖','💋','🎂','🐱','💻'];
   var i = 0;
   return function(elHmmOverlay) {
     hmm(emojiList[i++], elHmmOverlay);
@@ -100,7 +101,7 @@ export function startEmojiRandom() {
   }
 }
 
-export function startEmoji(emoji) {
+export function startEmoji(emoji, inline=true) {
   var overlay = getOverlay();
   hmm(emoji, overlay);
   let i = setInterval(hmm, 1500, emoji, overlay);
