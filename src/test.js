@@ -1,4 +1,11 @@
-import * as hmmmm from './index.js';
+import { startEmoji, startEmojiRandom } from './index.js';
 import './styles.css';
 
-let cb = hmmmm.startEmojiRandom();
+/*
+let cb = startEmojiRandom();
+setInterval(cb, 3500, true);
+*/
+
+
+let cb = startEmoji('🤔');
+setInterval(cb, 3500, true);

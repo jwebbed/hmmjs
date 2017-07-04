@@ -1,3 +1,7 @@
+/*
+* convience functions
+*/
+
 function randomBetween(x, y) {
   return Math.floor(Math.random() * y) + x;
 }
@@ -37,21 +41,6 @@ var genCSS = (function() {
   }
 })();
 
-// From https://stackoverflow.com/questions/18862256/how-to-detect-emoji-using-javascript
-export function isEmoji(str) {
-    var ranges = [
-        '\ud83c[\udf00-\udfff]', // U+1F300 to U+1F3FF
-        '\ud83d[\udc00-\ude4f]', // U+1F400 to U+1F64F
-        '\ud83d[\ude80-\udeff]' // U+1F680 to U+1F6FF
-    ];
-    if (str.match(ranges.join('|'))) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-
 function getOverlay() {
   var elHmmOverlay = document.createElement('div');
   elHmmOverlay.className = '🤔-overlay';
@@ -90,24 +79,55 @@ var randomEmoji = (function() {
   }
 })();
 
-export function startEmojiRandom() {
+function genCb(interval, overlay) {
+  return (smooth=false) => {
+    clearInterval(interval);
+    if (!smooth) {
+      document.body.removeChild(overlay);
+    }
+  }
+}
+
+/*
+* exposed functions
+*/
+
+// From https://stackoverflow.com/questions/18862256/how-to-detect-emoji-using-javascript
+// A convience function that is likely useful in any real application of this library
+export function isEmoji(str) {
+    var ranges = [
+        '\ud83c[\udf00-\udfff]', // U+1F300 to U+1F3FF
+        '\ud83d[\udc00-\ude4f]', // U+1F400 to U+1F64F
+        '\ud83d[\ude80-\udeff]' // U+1F680 to U+1F6FF
+    ];
+    if (str.match(ranges.join('|'))) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+export function startEmojiRandom(config={}) {
   var overlay = getOverlay();
   randomEmoji(overlay);
   let i = setInterval(randomEmoji, 1500, overlay);
 
-  return () => {
-    clearInterval(i);
-     document.body.removeChild(overlay);
-  }
+  return genCb(i, overlay);
 }
 
-export function startEmoji(emoji, inline=false) {
+const defaultConfig = {
+  random: false,
+  interval: 1500,
+  duration: 5500
+}
+
+export function startEmoji(emoji, _config=defaultConfig) {
+  const config = { ...defaultConfig, ..._config };
+  console.log(config);
+
   var overlay = getOverlay();
   hmm(emoji, overlay);
   let i = setInterval(hmm, 1500, emoji, overlay);
 
-  return () => {
-    clearInterval(i);
-    document.body.removeChild(overlay);
-  }
+  return genCb(i, overlay);
 }
