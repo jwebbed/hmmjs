@@ -71,10 +71,8 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max); //The maximum is exclusive and the minimum is inclusive
 }
 
-function rng(length) {
+function randomIter(length) {
   let nums = [...Array(length).keys()];
-  console.log(nums);
-
   return () => {
     if (nums.length === 0)
       nums = [...Array(length).keys()];
@@ -91,16 +89,20 @@ function rng(length) {
   }
 }
 
+function linearIter(length) {
+  let nums = [...Array(length).keys()];
+  return () => {
+    if (nums.length === 0)
+      nums = [...Array(length).keys()];
+    const val = nums[0];
+    nums.splice(0, 1);
+    return val;
+  }
+}
+
 const emojiList = ['🤔', '😁','🤣','😒','💕','🤦','🤞','🎶','😜','🌹','🤳','😊',
                  '❤', '👌','👍','🤷','😉','👏','🎉','🐱','‍👤','😂','😍','😘',
                  '🙌','✌','😎','💖','💋','🎂','🐱','💻'];
-
-var randomEmoji = (function() {
-  const iter = rng(emojiList.length);
-  return (elHmmOverlay) => {
-    hmm(emojiList[iter()], elHmmOverlay);
-  }
-})();
 
 function genCb(interval, overlay) {
   return (smooth=false) => {
@@ -110,7 +112,6 @@ function genCb(interval, overlay) {
     }
   }
 }
-
 
 /*
 * exposed functions
@@ -131,27 +132,27 @@ export function isEmoji(str) {
     }
 }
 
-export function startEmojiRandom(config={}) {
-  var overlay = getOverlay();
-  randomEmoji(overlay);
-  let i = setInterval(randomEmoji, 1500, overlay);
-
-  return genCb(i, overlay);
-}
-
 const defaultConfig = {
-  random: false,
+  random: true,
   interval: 1500,
   duration: 5500
 }
 
-export function startEmoji(emoji, _config=defaultConfig) {
+function startEmoji(emoji=emojiList, _config=defaultConfig) {
   const config = { ...defaultConfig, ..._config };
   console.log(config);
 
+  // Config handling
+  let iter = config.random ? randomIter(emoji.length) :  linearIter(emoji.length);
+
   var overlay = getOverlay();
   hmm(emoji, overlay);
-  let i = setInterval(hmm, 1500, emoji, overlay);
+  let i = setInterval(() => {
+    // hmm(emojiList[iter()], elHmmOverlay);
+    hmm(emoji[iter()], overlay);
+  }, 1500);
 
   return genCb(i, overlay);
 }
+
+export default startEmoji;
