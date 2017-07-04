@@ -1,5 +1,7 @@
+import { map, reduce } from 'lodash';
+
 /*
-* convience functions
+* convenience functions
 */
 
 function randomBetween(x, y) {
@@ -24,9 +26,17 @@ function randomContainerPlacement(el) {
     'scaleX(' + flip + '1)';
 }
 
+function appendCSS(selector, styles, overlay) {
+  let stylestr = reduce(styles, (total, row) => {
+    return total + `${row[0]}: ${row[1]};`;
+  }, '');
+  let style = `.${selector} { ${stylestr} }`;
+  console.log(style);
+}
+
 var genCSS = (function() {
   var used = [];
-  return function (emoji) {
+  return function (emoji, overlay) {
     if (used.indexOf(emoji) > -1)
       return;
     used.push(emoji)
@@ -34,10 +44,10 @@ var genCSS = (function() {
     var css = document.createElement('style');
     css.type = 'text/css';
 
-    var rule = '.🤔-' + emoji + '::before, ' + emoji + '::after { content: "' + emoji + '"};'
+    var rule = '.🤔-' + emoji + '::before, .🤔-' + emoji + '::after { content: "' + emoji + '"};'
 
     css.appendChild(document.createTextNode(rule));
-    var elements = document.getElementsByClassName("🤔-overlay")[0].appendChild(css);
+    var elements = overlay.appendChild(css);
   }
 })();
 
@@ -49,7 +59,7 @@ function getOverlay() {
 
 
 function hmm(emoji, elHmmOverlay) {
-  genCSS(emoji);
+  genCSS(emoji, elHmmOverlay);
 
   var elHmmContainer = document.createElement('div');
   elHmmContainer.className = '🤔-container';
@@ -112,7 +122,7 @@ function genCb(interval, overlay) {
 */
 
 // From https://stackoverflow.com/questions/18862256/how-to-detect-emoji-using-javascript
-// A convience function that is likely useful in any real application of this library
+// A convenience function that is likely useful in any real application of this library
 export function isEmoji(str) {
     var ranges = [
         '\ud83c[\udf00-\udfff]', // U+1F300 to U+1F3FF
@@ -140,6 +150,8 @@ function startEmoji(_config=defaultConfig) {
   // Config handling
   const emojis = config.emojis;
   let iter = config.random ? randomIter(emojis.length) :  linearIter(emojis.length);
+
+  appendCSS('🤔', [['animation', '🤔 5000ms linear forwards']])
 
   var overlay = getOverlay();
   hmm(emojis[iter()], overlay);

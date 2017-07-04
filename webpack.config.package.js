@@ -9,6 +9,14 @@ module.exports = {
         library: 'hmmmm',
         libraryTarget: 'umd'
     },
+    externals: {
+        "lodash": {
+            commonjs: "lodash",
+            commonjs2: "lodash",
+            amd: "lodash",
+            root: "_"
+        }
+    },
     module: {
       rules: [
       {
@@ -17,7 +25,14 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env'],
+            presets: [
+              [
+                "env",
+                {
+                  modules: false
+                }
+              ]
+            ],
             plugins: ["transform-object-rest-spread"]
           }
         }
