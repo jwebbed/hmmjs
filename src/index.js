@@ -34,7 +34,7 @@ var genCSS = (function() {
     var css = document.createElement('style');
     css.type = 'text/css';
 
-    var rule = '.' + emoji + '::before, ' + emoji + '::after { content: "' + emoji + '"};'
+    var rule = '.🤔-' + emoji + '::before, ' + emoji + '::after { content: "' + emoji + '"};'
 
     css.appendChild(document.createTextNode(rule));
     var elements = document.getElementsByClassName("🤔-overlay")[0].appendChild(css);
@@ -54,7 +54,7 @@ function hmm(emoji, elHmmOverlay) {
   var elHmmContainer = document.createElement('div');
   elHmmContainer.className = '🤔-container';
   var elHmm = document.createElement('div');
-  elHmm.className = '🤔 ' + emoji;
+  elHmm.className = '🤔 🤔-' + emoji;
   elHmmContainer.appendChild(elHmm);
   elHmmOverlay.appendChild(elHmmContainer);
 
@@ -65,17 +65,40 @@ function hmm(emoji, elHmmOverlay) {
   }, 5500);
 }
 
+// from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+function getRandomInt(max) {
+  max = Math.floor(max);
+  return Math.floor(Math.random() * max); //The maximum is exclusive and the minimum is inclusive
+}
+
+function rng(length) {
+  let nums = [...Array(length).keys()];
+  console.log(nums);
+
+  return () => {
+    if (nums.length === 0)
+      nums = [...Array(length).keys()];
+
+    const index = getRandomInt(nums.length);
+    const val = nums[index];
+
+    console.log(nums)
+    console.log(index);
+    console.log(val);
+
+    nums.splice(index, 1);
+    return val;
+  }
+}
 
 const emojiList = ['🤔', '😁','🤣','😒','💕','🤦','🤞','🎶','😜','🌹','🤳','😊',
                  '❤', '👌','👍','🤷','😉','👏','🎉','🐱','‍👤','😂','😍','😘',
                  '🙌','✌','😎','💖','💋','🎂','🐱','💻'];
 
 var randomEmoji = (function() {
-  var i = 0;
+  const iter = rng(emojiList.length);
   return (elHmmOverlay) => {
-    hmm(emojiList[i++], elHmmOverlay);
-    if (i == emojiList.length)
-      i = 0;
+    hmm(emojiList[iter()], elHmmOverlay);
   }
 })();
 
@@ -87,6 +110,7 @@ function genCb(interval, overlay) {
     }
   }
 }
+
 
 /*
 * exposed functions
