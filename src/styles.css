@@ -15,12 +15,15 @@
   transform-origin: center;
   pointer-events: none;
 }
+
+/*
 .🤔 {
   animation: 🤔 5000ms linear forwards;
   display: inline-block;
   will-change: transform;
   pointer-events: none;
 }
+*/
 
 .🤔::before,
 .🤔::after {

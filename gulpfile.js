@@ -9,3 +9,10 @@ gulp.task('dev', function() {
     .pipe(webpack(config, webpack2))
     .pipe(gulp.dest('bin/'));
 });
+
+gulp.task('dist', function() {
+  var config = require('./webpack.config.package.js');
+  return gulp.src('src/index.js')
+    .pipe(webpack(config, webpack2))
+    .pipe(gulp.dest('dist/'));
+});

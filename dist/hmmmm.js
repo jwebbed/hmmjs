@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
+		module.exports = factory(require("lodash"));
 	else if(typeof define === 'function' && define.amd)
-		define([], factory);
+		define(["lodash"], factory);
 	else if(typeof exports === 'object')
-		exports["hmmmm"] = factory();
+		exports["hmmmm"] = factory(require("lodash"));
 	else
-		root["hmmmm"] = factory();
-})(this, function() {
+		root["hmmmm"] = factory(root["_"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_1__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -75,16 +75,23 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (immutable) */ __webpack_exports__["isEmoji"] = isEmoji;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.isEmoji = isEmoji;
-exports.startEmoji = startEmoji;
+
+/*
+* convenience functions
+*/
+
 function randomBetween(x, y) {
   return Math.floor(Math.random() * y) + x;
 }
@@ -104,23 +111,99 @@ function randomContainerPlacement(el) {
   el.style.transform = 'translate(' + randomX() + ',' + randomY() + ') ' + 'rotate(' + randomAngle() + ') ' + 'scaleX(' + flip + '1)';
 }
 
+function appendCSS(selector, styles, overlay) {
+  var stylestr = __WEBPACK_IMPORTED_MODULE_0_lodash__["reduce"](styles, function (total, row) {
+    return total + (row[0] + ': ' + row[1] + ';');
+  }, '');
+  var style = '.' + selector + ' { ' + stylestr + ' }';
+  console.log(style);
+}
+
 var genCSS = function () {
   var used = [];
-  return function (emoji) {
+  return function (emoji, overlay) {
     if (used.indexOf(emoji) > -1) return;
     used.push(emoji);
 
     var css = document.createElement('style');
     css.type = 'text/css';
 
-    var rule = '.' + emoji + '::before, ' + emoji + '::after { content: "' + emoji + '"};';
+    var rule = '.🤔-' + emoji + '::before, .🤔-' + emoji + '::after { content: "' + emoji + '"};';
 
     css.appendChild(document.createTextNode(rule));
-    var elements = document.getElementsByClassName("🤔-overlay")[0].appendChild(css);
+    var elements = overlay.appendChild(css);
   };
 }();
 
+function getOverlay() {
+  var elHmmOverlay = document.createElement('div');
+  elHmmOverlay.className = '🤔-overlay';
+  return document.body.appendChild(elHmmOverlay);
+}
+
+function hmm(emoji, elHmmOverlay) {
+  genCSS(emoji, elHmmOverlay);
+
+  var elHmmContainer = document.createElement('div');
+  elHmmContainer.className = '🤔-container';
+  var elHmm = document.createElement('div');
+  elHmm.className = '🤔 🤔-' + emoji;
+  elHmmContainer.appendChild(elHmm);
+  elHmmOverlay.appendChild(elHmmContainer);
+
+  randomContainerPlacement(elHmmContainer);
+
+  setTimeout(function () {
+    elHmmOverlay.removeChild(elHmmContainer);
+  }, 5500);
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+function randomIter(length) {
+  var nums = [].concat(_toConsumableArray(Array(length).keys()));
+  return function () {
+    if (nums.length === 0) nums = [].concat(_toConsumableArray(Array(length).keys()));
+
+    var index = getRandomInt(nums.length);
+    var val = nums[index];
+
+    nums.splice(index, 1);
+    return val;
+  };
+}
+
+function linearIter(length) {
+  var nums = [].concat(_toConsumableArray(Array(length).keys()));
+  return function () {
+    if (nums.length === 0) nums = [].concat(_toConsumableArray(Array(length).keys()));
+    var val = nums[0];
+    nums.splice(0, 1);
+    return val;
+  };
+}
+
+var emojiList = ['🤔', '😁', '🤣', '😒', '💕', '🤦', '🤞', '🎶', '😜', '🌹', '🤳', '😊', '❤', '👌', '👍', '🤷', '😉', '👏', '🎉', '🐱', '‍👤', '😂', '😍', '😘', '🙌', '✌', '😎', '💖', '💋', '🎂', '🐱', '💻'];
+
+function genCb(interval, overlay) {
+  return function () {
+    var smooth = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+    clearInterval(interval);
+    if (!smooth) {
+      document.body.removeChild(overlay);
+    }
+  };
+}
+
+/*
+* exposed functions
+*/
+
 // From https://stackoverflow.com/questions/18862256/how-to-detect-emoji-using-javascript
+// A convenience function that is likely useful in any real application of this library
 function isEmoji(str) {
   var ranges = ['\uD83C[\uDF00-\uDFFF]', // U+1F300 to U+1F3FF
   '\uD83D[\uDC00-\uDE4F]', // U+1F400 to U+1F64F
@@ -133,43 +216,42 @@ function isEmoji(str) {
   }
 }
 
-function getOverlay() {
-  var elHmmOverlay = document.createElement('div');
-  elHmmOverlay.className = '🤔-overlay';
-  return document.body.appendChild(elHmmOverlay);
-}
-
-function hmm(emoji, elHmmOverlay) {
-  genCSS(emoji);
-
-  var elHmmContainer = document.createElement('div');
-  elHmmContainer.className = '🤔-container';
-  var elHmm = document.createElement('div');
-  elHmm.className = '🤔 ' + emoji;
-  elHmmContainer.appendChild(elHmm);
-  elHmmOverlay.appendChild(elHmmContainer);
-
-  randomContainerPlacement(elHmmContainer);
-
-  setTimeout(function () {
-    elHmmOverlay.removeChild(elHmmContainer);
-  }, 5500);
-}
-
-var randomEmoji = function () {
-  var emojiList = ['🤔', '😁', '🤣', '😒', '💕', '🤦', '🤞', '🎶', '😜', '🌹', '🤳', '😊', '❤', '👌', '👍', '🤷', '😉', '👏', '🎉', '🐱', '‍👤', '😂', '😍', '😘', '🙌', '✌', '😎', '💖', '💋', '🎂', '🐱', '💻'];
-  var i = 0;
-  return function (elHmmOverlay) {
-    hmm(emojiList[i++], elHmmOverlay);
-    if (i == emojiList.length) i = 0;
-  };
-}();
+var defaultConfig = {
+  emojis: emojiList,
+  random: true,
+  interval: 1500,
+  duration: 5500
+};
 
 function startEmoji() {
+  var _config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultConfig;
+
+  var config = _extends({}, defaultConfig, _config);
+  console.log(config);
+
+  // Config handling
+  var emojis = config.emojis;
+  var iter = config.random ? randomIter(emojis.length) : linearIter(emojis.length);
+
+  appendCSS('🤔', [['animation', '🤔 5000ms linear forwards']]);
+
   var overlay = getOverlay();
-  randomEmoji(overlay);
-  setInterval(randomEmoji, 1500, overlay);
+  hmm(emojis[iter()], overlay);
+  var i = setInterval(function () {
+    // hmm(emojiList[iter()], elHmmOverlay);
+    hmm(emojis[iter()], overlay);
+  }, config.interval);
+
+  return genCb(i, overlay);
 }
+
+/* harmony default export */ __webpack_exports__["default"] = (startEmoji);
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ })
 /******/ ]);

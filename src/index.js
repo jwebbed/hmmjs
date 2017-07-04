@@ -30,8 +30,23 @@ function appendCSS(selector, styles, overlay) {
   let stylestr = reduce(styles, (total, row) => {
     return total + `${row[0]}: ${row[1]};`;
   }, '');
-  let style = `.${selector} { ${stylestr} }`;
-  console.log(style);
+  let rule = `.${selector} { ${stylestr} }`;
+  console.log(rule);
+
+  var css = document.createElement('style');
+  css.type = 'text/css';
+
+  css.appendChild(document.createTextNode(rule));
+  overlay.appendChild(css);
+}
+
+function animationCSS(duration, overlay) {
+  appendCSS('🤔', [
+    ['animation', `🤔 ${duration}ms linear forwards`],
+    ['display', 'inline-block'],
+    ['will-change', 'transform'],
+    ['pointer-events', 'none'],
+  ], overlay);
 }
 
 var genCSS = (function() {
@@ -58,7 +73,7 @@ function getOverlay() {
 }
 
 
-function hmm(emoji, elHmmOverlay) {
+function hmm(emoji, elHmmOverlay, duration) {
   genCSS(emoji, elHmmOverlay);
 
   var elHmmContainer = document.createElement('div');
@@ -72,7 +87,7 @@ function hmm(emoji, elHmmOverlay) {
 
   setTimeout(function() {
     elHmmOverlay.removeChild(elHmmContainer);
-  }, 5500);
+  }, duration + 500);
 }
 
 function getRandomInt(max) {
@@ -140,24 +155,23 @@ const defaultConfig = {
   emojis: emojiList,
   random: true,
   interval: 1500,
-  duration: 5500
+  duration: 5000
 }
 
 function startEmoji(_config=defaultConfig) {
   const config = { ...defaultConfig, ..._config };
   console.log(config);
 
+  const overlay = getOverlay();
   // Config handling
   const emojis = config.emojis;
   let iter = config.random ? randomIter(emojis.length) :  linearIter(emojis.length);
+  animationCSS(config.duration, overlay);
 
-  appendCSS('🤔', [['animation', '🤔 5000ms linear forwards']])
-
-  var overlay = getOverlay();
-  hmm(emojis[iter()], overlay);
+  hmm(emojis[iter()], overlay, config.duration);
   let i = setInterval(() => {
     // hmm(emojiList[iter()], elHmmOverlay);
-    hmm(emojis[iter()], overlay);
+    hmm(emojis[iter()], overlay, config.duration);
   }, config.interval);
 
   return genCb(i, overlay);
