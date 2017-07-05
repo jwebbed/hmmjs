@@ -1,8 +1,12 @@
 import start from './index.js';
 import './styles.css';
 
-let cb = start({
+let cb1 = start({
   interval: 500,
   duration: 8000
 });
-//setInterval(cb, 3500, true);
+
+let cb2 = start({
+  interval: 1000,
+  duration: 3000
+});

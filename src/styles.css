@@ -1,22 +1,13 @@
-/*
-.🤔-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  z-index: 10;
-  overflow: hidden;
-  pointer-events: none;
-}
-*/
 
+/*
 .🤔-container {
   display: inline-block;
   position: absolute;
   transform-origin: center;
   pointer-events: none;
 }
+*/
+
 
 .🤔::before,
 .🤔::after {
@@ -27,26 +18,4 @@
 .🤔::before {
   height: 5em;
   width: 5em;
-}
-
-@keyframes 🤔 {
-  0% {
-    opacity: 0;
-  }
-  25% {
-    opacity: 1;
-  }
-  75% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(200%);
-  }
-}
-
-@keyframes 🤔🤔 {
-  100% {
-    transform: translateX(20%);
-  }
 }

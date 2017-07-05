@@ -81,15 +81,52 @@ function getOverlay() {
   var overlay = document.createElement('div');
   overlay.setAttribute('style', "position: fixed;top: 0;left: 0;  height: 100vh;width: 100vw;z-index: 10;overflow: hidden;pointer-events: none;")
 
+  let keyframes = document.createElement('style');
+  keyframes.type = 'text/css';
+  keyframes.appendChild(document.createTextNode(`@keyframes 🤔 {
+    0% {
+      opacity: 0;
+    }
+    25% {
+      opacity: 1;
+    }
+    75% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(200%);
+    }
+  }
+
+  @keyframes 🤔🤔 {
+    100% {
+      transform: translateX(20%);
+    }
+  }`));
+  overlay.appendChild(keyframes);
   return document.body.appendChild(overlay);
 }
 
 
+function genContainer() {
+  /*
+  .🤔-container {
+    display: inline-block;
+    position: absolute;
+    transform-origin: center;
+    pointer-events: none;
+  }
+  */
+  let container = document.createElement('div');
+  container.setAttribute('style', "display: inline-block;position:absolute;transform-origin:center;pointer-events: none;")
+  return container;
+}
+
 function hmm(emoji, elHmmOverlay, duration) {
   genCSS(emoji, elHmmOverlay);
 
-  var elHmmContainer = document.createElement('div');
-  elHmmContainer.className = '🤔-container';
+  var elHmmContainer = genContainer();
   var elHmm = document.createElement('div');
   elHmm.className = '🤔 🤔-' + emoji;
   elHmmContainer.appendChild(elHmm);
