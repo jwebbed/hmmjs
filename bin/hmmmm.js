@@ -136,10 +136,17 @@ function appendCSS(selector, styles, overlay) {
   overlay.appendChild(css);
 }
 
-function animationCSS(duration, overlay) {
-  appendCSS('🤔', [['animation', '\uD83E\uDD14 ' + duration + 'ms linear forwards'], ['display', 'inline-block'], ['will-change', 'transform'], ['pointer-events', 'none']], overlay);
+function cssStringToElement(s) {
+  var css = document.createElement('style');
+  css.type = 'text/css';
+  css.appendChild(document.createTextNode(s));
+  return css;
+}
 
-  appendCSS('🤔::after', [['animation', '\uD83E\uDD14\uD83E\uDD14 ' + duration + 'ms linear forwards'], ['height', '6.5em'], ['width', '6.5em'], ['position', 'absolute'], ['left', '-1.5em'], ['top', '-0.75em'], ['opacity', '0.5'], ['z-index', '-1']], overlay);
+function getAnimationCSS(config) {
+  var styles1 = cssTextGen([['animation', '\uD83E\uDD14 ' + config.duration + 'ms linear forwards'], ['display', 'inline-block'], ['will-change', 'transform'], ['pointer-events', 'none']]);
+  var styles2 = cssTextGen([['animation', '\uD83E\uDD14\uD83E\uDD14 ' + config.duration + 'ms linear forwards'], ['height', '6.5em'], ['width', '6.5em'], ['position', 'absolute'], ['left', '-1.5em'], ['top', '-0.75em'], ['opacity', '0.5'], ['z-index', '-1']]);
+  return cssStringToElement('.\uD83E\uDD14 { ' + styles1 + ' } .\uD83E\uDD14::after { ' + styles2);
 }
 
 var genCSS = function () {
@@ -172,11 +179,14 @@ function getBeforeAfterCss() {
   return css;
 }
 
-function getOverlay() {
+function getCss(config) {}
+
+function getOverlay(config) {
   var overlay = document.createElement('div');
   overlay.setAttribute('style', "position: fixed;top: 0;left: 0;  height: 100vh;width: 100vw;z-index: 10;overflow: hidden;pointer-events: none;");
   overlay.appendChild(getKeyframeCss());
   overlay.appendChild(getBeforeAfterCss());
+  overlay.appendChild(getAnimationCSS(config));
   return document.body.appendChild(overlay);
 }
 
@@ -275,12 +285,11 @@ function startEmoji() {
   console.log(config);
 
   // Get the overlay
-  var overlay = getOverlay();
+  var overlay = getOverlay(config);
 
   // Config handling
   var emojis = config.emojis;
   var iter = config.random ? randomIter(emojis.length) : linearIter(emojis.length);
-  animationCSS(config.duration, overlay);
 
   hmm(emojis[iter()], overlay, config.duration);
   var i = setInterval(function () {
