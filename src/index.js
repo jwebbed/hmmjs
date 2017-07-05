@@ -77,10 +77,7 @@ var genCSS = (function() {
   }
 })();
 
-function getOverlay() {
-  var overlay = document.createElement('div');
-  overlay.setAttribute('style', "position: fixed;top: 0;left: 0;  height: 100vh;width: 100vw;z-index: 10;overflow: hidden;pointer-events: none;")
-
+function getKeyframeCss() {
   let keyframes = document.createElement('style');
   keyframes.type = 'text/css';
   keyframes.appendChild(document.createTextNode(`@keyframes 🤔 {
@@ -104,7 +101,41 @@ function getOverlay() {
       transform: translateX(20%);
     }
   }`));
-  overlay.appendChild(keyframes);
+  return keyframes;
+}
+
+function getBeforeAfterCss() {
+  /*
+  .🤔::before,
+  .🤔::after {
+    display: inline-block;
+    font-size: 4em;
+  }
+
+  .🤔::before {
+    height: 5em;
+    width: 5em;
+  }
+  */
+  let css = document.createElement('style');
+  css.type = 'text/css';
+  css.appendChild(document.createTextNode(`.🤔::before, .🤔::after {
+    display: inline-block;
+    font-size: 4em;
+  }
+
+  .🤔::before {
+    height: 5em;
+    width: 5em;
+  }`));
+  return css;
+}
+
+function getOverlay() {
+  var overlay = document.createElement('div');
+  overlay.setAttribute('style', "position: fixed;top: 0;left: 0;  height: 100vh;width: 100vw;z-index: 10;overflow: hidden;pointer-events: none;")
+  overlay.appendChild(getKeyframeCss());
+  overlay.appendChild(getBeforeAfterCss());
   return document.body.appendChild(overlay);
 }
 

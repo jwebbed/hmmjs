@@ -1,5 +1,4 @@
 var path = require('path');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -28,17 +27,10 @@ module.exports = {
             plugins: ["transform-object-rest-spread"]
           }
         }
-      },
-      {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          use: "css-loader"
-        })
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin("styles.css"),
     new HtmlWebpackPlugin()
   ]
 };

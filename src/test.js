@@ -1,5 +1,4 @@
 import start from './index.js';
-import './styles.css';
 
 let cb1 = start({
   interval: 500,
