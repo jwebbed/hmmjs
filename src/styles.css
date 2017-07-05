@@ -1,3 +1,4 @@
+/*
 .🤔-overlay {
   position: fixed;
   top: 0;
@@ -8,6 +9,7 @@
   overflow: hidden;
   pointer-events: none;
 }
+*/
 
 .🤔-container {
   display: inline-block;

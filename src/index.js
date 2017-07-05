@@ -78,9 +78,10 @@ var genCSS = (function() {
 })();
 
 function getOverlay() {
-  var elHmmOverlay = document.createElement('div');
-  elHmmOverlay.className = '🤔-overlay';
-  return document.body.appendChild(elHmmOverlay);
+  var overlay = document.createElement('div');
+  overlay.setAttribute('style', "position: fixed;top: 0;left: 0;  height: 100vh;width: 100vw;z-index: 10;overflow: hidden;pointer-events: none;")
+
+  return document.body.appendChild(overlay);
 }
 
 
@@ -173,7 +174,9 @@ function startEmoji(_config=defaultConfig) {
   const config = { ...defaultConfig, ..._config };
   console.log(config);
 
+  // Get the overlay
   const overlay = getOverlay();
+
   // Config handling
   const emojis = config.emojis;
   let iter = config.random ? randomIter(emojis.length) :  linearIter(emojis.length);
