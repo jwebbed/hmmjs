@@ -204,10 +204,11 @@ const defaultConfig = {
   emojis: emojiList,
   random: true,
   interval: 1500,
-  duration: 5000
+  duration: 5000,
+  zeroBase: 10
 }
 
-function startEmoji(_config=defaultConfig) {
+export default function startEmoji(_config=defaultConfig) {
   const config = { ...defaultConfig, ..._config };
   console.log(config);
 
@@ -227,5 +228,3 @@ function startEmoji(_config=defaultConfig) {
 
   return genCb(i, overlay);
 }
-
-export default startEmoji;

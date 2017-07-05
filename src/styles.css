@@ -1,14 +1,3 @@
-
-/*
-.🤔-container {
-  display: inline-block;
-  position: absolute;
-  transform-origin: center;
-  pointer-events: none;
-}
-*/
-
-
 .🤔::before,
 .🤔::after {
   display: inline-block;
