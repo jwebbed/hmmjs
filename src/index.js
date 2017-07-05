@@ -1,4 +1,4 @@
-import { map, reduce } from 'lodash';
+import { reduce } from 'lodash/fp';
 
 /*
 * convenience functions
@@ -26,10 +26,12 @@ function randomContainerPlacement(el) {
     'scaleX(' + flip + '1)';
 }
 
+const cssTextGen = reduce((total, row) => {
+  return total + `${row[0]}: ${row[1]};`;
+}, '');
+
 function appendCSS(selector, styles, overlay) {
-  let stylestr = reduce(styles, (total, row) => {
-    return total + `${row[0]}: ${row[1]};`;
-  }, '');
+  let stylestr = cssTextGen(styles);
   let rule = `.${selector} { ${stylestr} }`;
   console.log(rule);
 
@@ -105,18 +107,6 @@ function getKeyframeCss() {
 }
 
 function getBeforeAfterCss() {
-  /*
-  .🤔::before,
-  .🤔::after {
-    display: inline-block;
-    font-size: 4em;
-  }
-
-  .🤔::before {
-    height: 5em;
-    width: 5em;
-  }
-  */
   let css = document.createElement('style');
   css.type = 'text/css';
   css.appendChild(document.createTextNode(`.🤔::before, .🤔::after {
@@ -141,14 +131,6 @@ function getOverlay() {
 
 
 function genContainer() {
-  /*
-  .🤔-container {
-    display: inline-block;
-    position: absolute;
-    transform-origin: center;
-    pointer-events: none;
-  }
-  */
   let container = document.createElement('div');
   container.setAttribute('style', "display: inline-block;position:absolute;transform-origin:center;pointer-events: none;")
   return container;
