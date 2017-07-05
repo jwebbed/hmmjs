@@ -134,7 +134,7 @@ function getCss(config) {
 
 function getOverlay(config) {
   var overlay = document.createElement('div');
-  overlay.setAttribute('style', "position: fixed;top: 0;left: 0;  height: 100vh;width: 100vw;z-index: 10;overflow: hidden;pointer-events: none;")
+  overlay.setAttribute('style', `position: fixed;top: 0;left: 0;  height: 100vh;width: 100vw;z-index: ${config.zbase};overflow: hidden;pointer-events: none;`)
   overlay.appendChild(getKeyframeCss());
   overlay.appendChild(getBeforeAfterCss());
   overlay.appendChild(getAnimationCSS(config));
@@ -230,7 +230,7 @@ const defaultConfig = {
   random: true,
   interval: 1500,
   duration: 5000,
-  zeroBase: 10
+  zbase: 10
 }
 
 export default function startEmoji(_config=defaultConfig) {
