@@ -74,7 +74,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var cb1 = __WEBPACK_IMPORTED_MODULE_0__index_js__["a" /* default */]({
   interval: 500,
-  duration: 8000
+  duration: 8000,
+  random: false
 });
 
 var cb2 = __WEBPACK_IMPORTED_MODULE_0__index_js__["a" /* default */]({
@@ -229,11 +230,10 @@ function randomIter(length) {
 
 function linearIter(length) {
   var nums = [].concat(_toConsumableArray(Array(length).keys()));
+  var i = 0;
   return function () {
-    if (nums.length === 0) nums = [].concat(_toConsumableArray(Array(length).keys()));
-    var val = nums[0];
-    nums.splice(0, 1);
-    return val;
+    if (i === nums.length) i = 0;
+    return nums[i++];
   };
 }
 

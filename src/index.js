@@ -180,12 +180,11 @@ function randomIter(length) {
 
 function linearIter(length) {
   let nums = [...Array(length).keys()];
+  let i = 0;
   return () => {
-    if (nums.length === 0)
-      nums = [...Array(length).keys()];
-    const val = nums[0];
-    nums.splice(0, 1);
-    return val;
+    if (i === nums.length)
+      i = 0;
+    return nums[i++];
   }
 }
 
