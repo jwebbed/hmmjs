@@ -229,11 +229,10 @@ function randomIter(length) {
 }
 
 function linearIter(length) {
-  var nums = [].concat(_toConsumableArray(Array(length).keys()));
   var i = 0;
   return function () {
-    if (i === nums.length) i = 0;
-    return nums[i++];
+    if (i === length) i = 0;
+    return i++;
   };
 }
 

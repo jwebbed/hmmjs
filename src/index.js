@@ -179,12 +179,11 @@ function randomIter(length) {
 }
 
 function linearIter(length) {
-  let nums = [...Array(length).keys()];
   let i = 0;
   return () => {
-    if (i === nums.length)
+    if (i === length)
       i = 0;
-    return nums[i++];
+    return i++;
   }
 }
 
