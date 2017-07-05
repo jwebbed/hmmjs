@@ -47,6 +47,30 @@ function animationCSS(duration, overlay) {
     ['will-change', 'transform'],
     ['pointer-events', 'none'],
   ], overlay);
+
+  appendCSS('🤔::after', [
+    ['animation', `🤔🤔 ${duration}ms linear forwards`],
+    ['height', '6.5em'],
+    ['width', '6.5em'],
+    ['position', 'absolute'],
+    ['left', '-1.5em'],
+    ['top', '-0.75em'],
+    ['opacity', '0.5'],
+    ['z-index', '-1'],
+  ], overlay);
+
+  /*
+  .🤔::after {
+    animation: 🤔🤔 5000ms linear forwards;
+    height: 6.5em;
+    width: 6.5em;
+    position: absolute;
+    left: -1.5em;
+    top: -0.75em;
+    opacity: 0.5;
+    z-index: -1;
+  }
+  */
 }
 
 var genCSS = (function() {
@@ -87,7 +111,7 @@ function hmm(emoji, elHmmOverlay, duration) {
 
   setTimeout(function() {
     elHmmOverlay.removeChild(elHmmContainer);
-  }, duration + 500);
+  }, duration + (duration * 0.1));
 }
 
 function getRandomInt(max) {

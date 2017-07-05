@@ -7,7 +7,7 @@ import './styles.css';
 
 
 let cb = start({
-  interval: 1000,
+  interval: 500,
   duration: 8000
 });
 //setInterval(cb, 3500, true);
