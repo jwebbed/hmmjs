@@ -128,10 +128,6 @@ function getBeforeAfterCss() {
   return css;
 }
 
-function getCss(config) {
-
-}
-
 function getOverlay(config) {
   var overlay = document.createElement('div');
   overlay.setAttribute('style', `position: fixed;top: 0;left: 0;  height: 100vh;width: 100vw;z-index: ${config.zbase};overflow: hidden;pointer-events: none;`)
