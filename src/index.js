@@ -58,19 +58,6 @@ function animationCSS(duration, overlay) {
     ['opacity', '0.5'],
     ['z-index', '-1'],
   ], overlay);
-
-  /*
-  .🤔::after {
-    animation: 🤔🤔 5000ms linear forwards;
-    height: 6.5em;
-    width: 6.5em;
-    position: absolute;
-    left: -1.5em;
-    top: -0.75em;
-    opacity: 0.5;
-    z-index: -1;
-  }
-  */
 }
 
 var genCSS = (function() {
