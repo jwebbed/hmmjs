@@ -1,8 +1,22 @@
 # hmmjs
 Based on a project by @arkon
 
-![🤔](http://68.media.tumblr.com/c4573cbc2c1fdfecc3a9e4ee0f4748fc/tumblr_oo4lr9haXC1vvs38vo1_500.gif)
+## Usage
 
+A bare minimum usage of this package can be shown as follows:
+```
+import start from 'hmmjs';
+
+start();
+```
+
+### `start`
+`start(config)` starts the overlay with the input configuration. When there is no
+input config param it uses the default config as listed below
+
+#### `config.emojis`
+`[ string ]` - defaults to a list of all emojis
+Used to determine the pool of emojis that float across the screen
 
 #### Roadmap
 * 1.0.0
