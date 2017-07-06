@@ -1,7 +1,7 @@
 {
-  "name": "emoji-overlay",
+  "name": "hmmjs",
   "version": "0.1.0",
-  "description": "Package to overlay with emoji",
+  "description": "A package to overlay pages with emoji",
   "main": "dist/hmmmm.js",
   "module": "src/index.js",
   "scripts": {
