@@ -16,6 +16,7 @@ input config param it uses the default config as listed below
 
 #### `config.emojis`
 `[ string ]` - defaults to a list of all emojis
+
 Used to determine the pool of emojis that float across the screen
 
 #### Roadmap
