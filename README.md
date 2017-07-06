@@ -5,12 +5,10 @@ Based on a project by @arkon
 
 
 #### Roadmap
-* 0.1.0
+* 1.0.0
     * Call with emoji
     * Call for random emoji
     * Call with list of emojis
     * Return callback to stop
-* 1.0.0
-    * Support inline css optionally
 * 1.1.0
     * Allow custom fonts
