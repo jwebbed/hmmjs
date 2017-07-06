@@ -69,9 +69,9 @@ function getAnimationCSS(config) {
   return cssStringToElement(`.🤔 { ${styles1} } .🤔::after { ${styles2}`);
 }
 
-var genCSS = (function() {
+function getCSSGenerator(overlay) {
   var used = [];
-  return function (emoji, overlay) {
+  return function (emoji) {
     if (used.indexOf(emoji) > -1)
       return;
     used.push(emoji)
@@ -84,7 +84,7 @@ var genCSS = (function() {
     css.appendChild(document.createTextNode(rule));
     var elements = overlay.appendChild(css);
   }
-})();
+};
 
 function getKeyframeCss() {
   let keyframes = document.createElement('style');
@@ -144,21 +144,25 @@ function genContainer() {
   return container;
 }
 
-function hmm(emoji, elHmmOverlay, duration) {
-  genCSS(emoji, elHmmOverlay);
+function emojiOverlayGenerator(overlay, config) {
+  const genCSS = getCSSGenerator(overlay);
+  return (emoji) => {
+    genCSS(emoji);
 
-  var elHmmContainer = genContainer();
-  var elHmm = document.createElement('div');
-  elHmm.className = '🤔 🤔-' + emoji;
-  elHmmContainer.appendChild(elHmm);
-  elHmmOverlay.appendChild(elHmmContainer);
+    var elHmmContainer = genContainer();
+    var elHmm = document.createElement('div');
+    elHmm.className = '🤔 🤔-' + emoji;
+    elHmmContainer.appendChild(elHmm);
+    overlay.appendChild(elHmmContainer);
 
-  randomContainerPlacement(elHmmContainer);
+    randomContainerPlacement(elHmmContainer);
 
-  setTimeout(function() {
-    elHmmOverlay.removeChild(elHmmContainer);
-  }, duration + (duration * 0.1));
+    setTimeout(function() {
+      overlay.removeChild(elHmmContainer);
+    }, config.duration + (config.duration * 0.1));
+  }
 }
+
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -238,10 +242,11 @@ export default function startEmoji(_config=defaultConfig) {
   const emojis = config.emojis;
   let iter = config.random ? randomIter(emojis.length) :  linearIter(emojis.length);
 
-  hmm(emojis[iter()], overlay, config.duration);
+  const hmm = emojiOverlayGenerator(overlay, config);
+  hmm(emojis[iter()]);
   let i = setInterval(() => {
     // hmm(emojiList[iter()], elHmmOverlay);
-    hmm(emojis[iter()], overlay, config.duration);
+    hmm(emojis[iter()]);
   }, config.interval);
 
   return genCb(i, overlay);

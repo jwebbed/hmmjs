@@ -150,9 +150,9 @@ function getAnimationCSS(config) {
   return cssStringToElement('.\uD83E\uDD14 { ' + styles1 + ' } .\uD83E\uDD14::after { ' + styles2);
 }
 
-var genCSS = function () {
+function getCSSGenerator(overlay) {
   var used = [];
-  return function (emoji, overlay) {
+  return function (emoji) {
     if (used.indexOf(emoji) > -1) return;
     used.push(emoji);
 
@@ -164,7 +164,7 @@ var genCSS = function () {
     css.appendChild(document.createTextNode(rule));
     var elements = overlay.appendChild(css);
   };
-}();
+};
 
 function getKeyframeCss() {
   var keyframes = document.createElement('style');
@@ -195,20 +195,23 @@ function genContainer() {
   return container;
 }
 
-function hmm(emoji, elHmmOverlay, duration) {
-  genCSS(emoji, elHmmOverlay);
+function emojiOverlayGenerator(overlay, config) {
+  var genCSS = getCSSGenerator(overlay);
+  return function (emoji) {
+    genCSS(emoji);
 
-  var elHmmContainer = genContainer();
-  var elHmm = document.createElement('div');
-  elHmm.className = '🤔 🤔-' + emoji;
-  elHmmContainer.appendChild(elHmm);
-  elHmmOverlay.appendChild(elHmmContainer);
+    var elHmmContainer = genContainer();
+    var elHmm = document.createElement('div');
+    elHmm.className = '🤔 🤔-' + emoji;
+    elHmmContainer.appendChild(elHmm);
+    overlay.appendChild(elHmmContainer);
 
-  randomContainerPlacement(elHmmContainer);
+    randomContainerPlacement(elHmmContainer);
 
-  setTimeout(function () {
-    elHmmOverlay.removeChild(elHmmContainer);
-  }, duration + duration * 0.1);
+    setTimeout(function () {
+      overlay.removeChild(elHmmContainer);
+    }, config.duration + config.duration * 0.1);
+  };
 }
 
 function getRandomInt(max) {
@@ -288,10 +291,11 @@ function startEmoji() {
   var emojis = config.emojis;
   var iter = config.random ? randomIter(emojis.length) : linearIter(emojis.length);
 
-  hmm(emojis[iter()], overlay, config.duration);
+  var hmm = emojiOverlayGenerator(overlay, config);
+  hmm(emojis[iter()]);
   var i = setInterval(function () {
     // hmm(emojiList[iter()], elHmmOverlay);
-    hmm(emojis[iter()], overlay, config.duration);
+    hmm(emojis[iter()]);
   }, config.interval);
 
   return genCb(i, overlay);
