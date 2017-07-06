@@ -11,4 +11,7 @@ Based on a project by @arkon
     * Call with list of emojis
     * Return callback to stop
 * 1.1.0
+    * Granular control over transparency
+    * Enable manipulation of layers of emoji
+* 1.2.0
     * Allow custom fonts
