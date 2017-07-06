@@ -2,7 +2,7 @@
   "name": "emoji-overlay",
   "version": "0.1.0",
   "description": "Package to overlay with emoji",
-  "main": "bin/hmmmm.js",
+  "main": "dist/hmmmm.js",
   "module": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
