@@ -2,21 +2,21 @@
   "name": "hmmjs",
   "version": "0.1.0",
   "description": "A package to overlay pages with emoji",
-  "main": "dist/hmmmm.js",
+  "main": "dist/hmm.js",
   "module": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jwebbed/hmmmm.git"
+    "url": "git+https://github.com/jwebbed/hmmjs.git"
   },
   "author": "Jonathan Webb",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jwebbed/hmmmm/issues"
+    "url": "https://github.com/jwebbed/hmmjs/issues"
   },
-  "homepage": "https://github.com/jwebbed/hmmmm#readme",
+  "homepage": "http://webbdev.ca/hmmjs",
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
