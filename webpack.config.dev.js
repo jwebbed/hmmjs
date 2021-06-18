@@ -7,6 +7,7 @@ module.exports = {
         path: path.resolve(__dirname, './bin'),
         filename: 'hmmmm.js',
     },
+    mode: 'development',
     devtool: 'source-map',
     module: {
       rules: [
@@ -16,15 +17,8 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              [
-                "env",
-                {
-                  modules: false
-                }
-              ]
-            ],
-            plugins: ["transform-object-rest-spread"]
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-syntax-object-rest-spread']
           }
         }
       }

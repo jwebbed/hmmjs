@@ -3,6 +3,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: './src/index.js',
+    mode: 'production',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'hmm.js',
@@ -25,21 +26,11 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              [
-                "env",
-                {
-                  modules: false
-                }
-              ]
-            ],
-            plugins: ["transform-object-rest-spread"]
+            presets: ['@babel/preset-env'],
+            plugins: ["@babel/plugin-syntax-object-rest-spread"]
           }
         }
       }
     ]
-  },
-  plugins: [
-    new webpack.optimize.ModuleConcatenationPlugin()
-  ]
+  }
 };
