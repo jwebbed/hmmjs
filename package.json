@@ -1,9 +1,10 @@
 {
   "name": "hmmjs",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A package to overlay pages with emoji",
   "main": "dist/hmm.js",
   "module": "src/index.js",
+  "sideEffects": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
