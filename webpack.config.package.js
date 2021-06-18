@@ -7,8 +7,10 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'hmm.js',
-        library: 'hmm',
-        libraryTarget: 'umd'
+        library: {
+          name: 'hmm',
+          type: 'umd',
+        }
     },
     externals: {
         "lodash": {
@@ -27,7 +29,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
-            plugins: ["@babel/plugin-syntax-object-rest-spread"]
+            plugins: ['@babel/plugin-syntax-object-rest-spread']
           }
         }
       }
